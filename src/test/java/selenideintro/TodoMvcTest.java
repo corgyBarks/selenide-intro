@@ -1,4 +1,5 @@
 package selenideintro;
+
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.CollectionCondition.exactTexts;
@@ -13,12 +14,10 @@ public class TodoMvcTest {
 
 
     @Test
-    void completesTask(){
-
+    void completesTask() {
 
 
         open("https://todomvc.com/examples/emberjs/");
-
 
 
         $("#new-todo").setValue("a").pressEnter();
@@ -28,18 +27,14 @@ public class TodoMvcTest {
         $("#new-todo").setValue("c").pressEnter();
 
 
-
         $$("#todo-list li").shouldHave(exactTexts("a", "b", "c"));
 
         $("#todo-list li:nth-of-type(2) .toggle").click();
         $$("#todo-list li.completed")
-
                 .shouldHave(exactTexts("b"));
 
 
-
         $$("#todo-list>li:not(.completed)")
-
                 .shouldHave(exactTexts("a", "c"));
 
     }
