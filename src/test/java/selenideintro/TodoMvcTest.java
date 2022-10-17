@@ -31,10 +31,10 @@ public class TodoMvcTest {
 
         $$("#todo-list li").shouldHave(exactTexts("a", "b", "c"));
 
-        $("#todo-list li:nth-child(2) .toggle").click();
-        $("#todo-list li.completed:nth-child(2)")
+        $("#todo-list li:nth-of-type(2) .toggle").click();
+        $$("#todo-list li.completed")
 
-                .shouldHave(exactText("b"));
+                .shouldHave(exactTexts("b"));
 
 
 
