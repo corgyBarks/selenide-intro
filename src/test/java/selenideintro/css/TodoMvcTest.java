@@ -1,4 +1,4 @@
-package selenideintro;
+package selenideintro.css;
 
 import org.junit.jupiter.api.Test;
 
