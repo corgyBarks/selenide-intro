@@ -1,6 +1,7 @@
 package selenideintro.xpath;
 
 import org.junit.jupiter.api.Test;
+import xpathutils.Xpath;
 
 import static com.codeborne.selenide.CollectionCondition.exactTexts;
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -16,12 +17,12 @@ public class TodoMvcTest {
         $(byXpath("//*[@id='new-todo']")).setValue("c").pressEnter();
         $$(byXpath("//*[@id='todo-list']//li")).shouldHave(exactTexts("a", "b", "c"));
 
-        $(byXpath("//*[@id='todo-list']//li[.//text()='b']//*[contains(concat(' ', normalize-space(@class), ' '), ' toggle ')]"))
+        $(byXpath("//*[@id='todo-list']//li[.//text()='b']//*" + Xpath.hasCssClass("toggle")))
                 .click();
 
-        $$(byXpath("//*[@id='todo-list']//li[contains(concat(' ', normalize-space(@class), ' '), ' completed ')]"))
+        $$(byXpath("//*[@id='todo-list']//li" + Xpath.hasCssClass("completed")))
                 .shouldHave(exactTexts("b"));
-        $$(byXpath("//*[@id='todo-list']//li[not(contains(concat(' ', normalize-space(@class), ' '), ' completed '))]"))
+        $$(byXpath("//*[@id='todo-list']//li" + Xpath.notHaveCssClass("completed")))
                 .shouldHave(exactTexts("a", "c"));
     }
 }
