@@ -1,7 +1,7 @@
 package selenideintro.xpath;
 
 import org.junit.jupiter.api.Test;
-import xpathutils.Xpath;
+import util.Xpath;
 
 import static com.codeborne.selenide.CollectionCondition.exactTexts;
 import static com.codeborne.selenide.Selectors.byXpath;
@@ -17,12 +17,12 @@ public class TodoMvcTest {
         $(byXpath("//*[@id='new-todo']")).setValue("c").pressEnter();
         $$(byXpath("//*[@id='todo-list']//li")).shouldHave(exactTexts("a", "b", "c"));
 
-        $(byXpath("//*[@id='todo-list']//li[.//text()='b']//*" + Xpath.hasCssClass("toggle")))
+        $(byXpath("//*[@id='todo-list']//li[.//text()='b']//*" + Xpath.byCssClass("toggle")))
                 .click();
 
-        $$(byXpath("//*[@id='todo-list']//li" + Xpath.hasCssClass("completed")))
+        $$(byXpath("//*[@id='todo-list']//li" + Xpath.byCssClass("completed")))
                 .shouldHave(exactTexts("b"));
-        $$(byXpath("//*[@id='todo-list']//li" + Xpath.notHaveCssClass("completed")))
+        $$(byXpath("//*[@id='todo-list']//li" + Xpath.byNoCssClass("completed")))
                 .shouldHave(exactTexts("a", "c"));
     }
 }
