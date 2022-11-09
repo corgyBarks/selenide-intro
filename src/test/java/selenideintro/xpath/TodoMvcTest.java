@@ -17,12 +17,27 @@ public class TodoMvcTest {
         $(byXpath("//*[@id='new-todo']")).setValue("c").pressEnter();
         $$(byXpath("//*[@id='todo-list']//li")).shouldHave(exactTexts("a", "b", "c"));
 
-        $(byXpath("//*[@id='todo-list']//li[.//text()='b']//*" + Xpath.byCssClass("toggle")))
-                .click();
+        $(byXpath(new Xpath("//*")
+                .byId("todo-list")
+                .child("li")
+                .filterByDescendantWithText("b")
+                        .descendant()
+                        .byCssClass("toggle")
+                        .build()
+                        )).click();
 
-        $$(byXpath("//*[@id='todo-list']//li" + Xpath.byCssClass("completed")))
+        $$(byXpath(new Xpath("//*")
+                .byId("todo-list")
+                .child("li")
+                .byCssClass("completed")
+                .build()))
                 .shouldHave(exactTexts("b"));
-        $$(byXpath("//*[@id='todo-list']//li" + Xpath.byNoCssClass("completed")))
+
+        $$(byXpath(new Xpath("//*")
+                .byId("todo-list")
+                .child("li")
+                .byNoCssClass("completed")
+                .build()))
                 .shouldHave(exactTexts("a", "c"));
     }
 }

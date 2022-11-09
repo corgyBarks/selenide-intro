@@ -1,19 +1,36 @@
 package util;
 
 public class Xpath {
-    private static String hasCssClass(String value) {
-        return "contains(concat(' ', normalize-space(@class), ' '), ' " + value + " ')";
+    private String selector;
+
+    public Xpath(String selectorStart) {
+        selector = selectorStart;
     }
-    public static String filterBy(String predicate){
-        return "[" + predicate + "]";
+    public Xpath byCssClass(String value){
+        selector += "[contains(concat(' ', normalize-space(@class), ' '), ' " + value + " ')]";
+        return this;
     }
-    public static String not(String predicate){
-        return "not(" + predicate + ")";
+    public Xpath byNoCssClass(String value){
+        selector += "[not(contains(concat(' ', normalize-space(@class), ' '), ' " + value + " '))]";
+        return this;
     }
-    public static String byCssClass(String value){
-        return filterBy(hasCssClass(value));
+    public Xpath byId(String value){
+        selector += "[@id='" + value + "']";
+        return this;
     }
-    public static String byNoCssClass(String value){
-        return filterBy(not(hasCssClass(value)));
+    public Xpath child(String value){
+        selector += "//" + value;
+        return this;
+    }
+    public Xpath filterByDescendantWithText(String value){
+        selector += "[.//text()='"+ value + "']";
+        return this;
+    }
+    public Xpath descendant(){
+        selector += "//*";
+        return this;
+    }
+    public String build(){
+        return selector;
     }
 }
