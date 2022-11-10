@@ -1,6 +1,7 @@
 package selenideintro.xpath;
 
 import org.junit.jupiter.api.Test;
+import util.Its;
 import util.Xpath;
 
 import static com.codeborne.selenide.CollectionCondition.exactTexts;
@@ -12,31 +13,34 @@ public class TodoMvcTest {
     void completesTask() {
         open("https://todomvc.com/examples/emberjs/");
 
-        $(byXpath("//*[@id='new-todo']")).setValue("a").pressEnter();
-        $(byXpath("//*[@id='new-todo']")).setValue("b").pressEnter();
-        $(byXpath("//*[@id='new-todo']")).setValue("c").pressEnter();
-        $$(byXpath("//*[@id='todo-list']//li")).shouldHave(exactTexts("a", "b", "c"));
+        $(byXpath(Xpath.all().by(Its.id("new-todo")).build())).setValue("a").pressEnter();
+        $(byXpath(Xpath.all().by(Its.id("new-todo")).build())).setValue("b").pressEnter();
+        $(byXpath(Xpath.all().by(Its.id("new-todo")).build())).setValue("c").pressEnter();
+        $$(byXpath(Xpath.all().by(Its.id("todo-list")).descendant("li").build()))
+                .shouldHave(exactTexts("a", "b", "c"));
 
-        $(byXpath(new Xpath("//*")
-                .byId("todo-list")
-                .child("li")
-                .filterByDescendantWithText("b")
+        $(byXpath(Xpath
+                        .all()
+                        .by(Its.id("todo-list"))
+                        .child("li")
+                        .by(Its.descendantWithText("b"))
                         .descendant()
-                        .byCssClass("toggle")
+                        .by(Its.cssClass("toggle"))
                         .build()
                         )).click();
 
-        $$(byXpath(new Xpath("//*")
-                .byId("todo-list")
+        $$(byXpath(Xpath
+                .all()
+                .by(Its.id("todo-list"))
                 .child("li")
-                .byCssClass("completed")
+                .by(Its.cssClass("completed"))
                 .build()))
                 .shouldHave(exactTexts("b"));
 
         $$(byXpath(new Xpath("//*")
-                .byId("todo-list")
+                .by(Its.id("todo-list"))
                 .child("li")
-                .byNoCssClass("completed")
+                .by(Its.noCssClass("completed"))
                 .build()))
                 .shouldHave(exactTexts("a", "c"));
     }
