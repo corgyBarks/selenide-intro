@@ -40,7 +40,7 @@ public class TodoMvcTest {
         $$(byXpath(new Xpath("//*")
                 .by(Its.id("todo-list"))
                 .child("li")
-                .by(Its.noCssClass("completed"))
+                .byNot(Its.cssClass("completed"))
                 .build()))
                 .shouldHave(exactTexts("a", "c"));
     }
